@@ -1,6 +1,8 @@
+import 'package:bibliogram/components/common_widgets.dart';
 import 'package:bibliogram/components/mini_button.dart';
 import 'package:bibliogram/components/text_form_field.dart';
 import 'package:bibliogram/components/text_link_button.dart';
+import 'package:bibliogram/configurations/constants.dart';
 import 'package:bibliogram/presentations/auth/private_key_page.dart';
 import 'package:bibliogram/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -18,16 +20,35 @@ class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final usernameController = TextEditingController();
+  // Classes
+  CommonWidgets commonWidgets = CommonWidgets();
   // State variables
   bool _buttonLoadingIndicator = false;
+
+  // Snackbar helper function
+  void _showSnackBar(String message) {
+    if (mounted) {
+      commonWidgets.showSnackBar(context, message);
+    }
+  }
 
   void _toggleButtonLoadingIndicator() =>
       setState(() => _buttonLoadingIndicator = !_buttonLoadingIndicator);
 
   Future<void> registerReq(String name, String username) async {
-    await AuthApi().register({"fullname": name, "username": username});
+    final response =
+        await AuthApi().register({"fullname": name, "username": username});
     _toggleButtonLoadingIndicator();
-    Get.offAll(() => const PrivateKeyPage());
+    if (response.statusCode == statusCode["error"]) {
+      _showSnackBar('${alertDialog["usernameTaken"]}');
+      return;
+    } else if (response.statusCode == statusCode["error"]) {
+      _showSnackBar('${alertDialog["commonError"]}');
+      return;
+    }
+    Get.offAll(() => PrivateKeyPage(
+          privateKey: '${response.privateKey}',
+        ));
   }
 
   @override
@@ -57,8 +78,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     hint: 'Fullname',
                     textEditingController: nameController,
                     validator: (value) {
-                      if (value == null || value.length < 6) {
-                        return 'Mandatory';
+                      if (value == null || value.isEmpty) {
+                        return textFieldErrors["fullname"];
                       }
                       return null;
                     },
@@ -68,8 +89,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     hint: 'Username',
                     textEditingController: usernameController,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Mandatory';
+                      if (value == null || value.length < 6) {
+                        return textFieldErrors["username"];
                       }
                       return null;
                     },

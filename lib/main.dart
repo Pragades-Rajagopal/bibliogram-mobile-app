@@ -1,5 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:bibliogram/presentations/auth/login_register.dart';
+import 'package:bibliogram/presentations/app/base.dart';
 import 'package:bibliogram/utils/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           darkTheme: themeDark,
           theme: theme,
-          home: const LoginOrRegister(),
+          home: const AppBasePage(),
         );
       },
     );
