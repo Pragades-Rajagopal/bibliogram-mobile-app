@@ -1,7 +1,4 @@
-import 'package:bibliogram/components/appbar.dart';
-import 'package:bibliogram/components/common_widgets.dart';
-import 'package:bibliogram/presentations/app/pages/grams.dart';
-import 'package:bibliogram/utils/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppBasePage extends StatefulWidget {
@@ -12,73 +9,93 @@ class AppBasePage extends StatefulWidget {
 }
 
 class _AppBasePageState extends State<AppBasePage> {
-  late PageController _pageController = PageController();
-  var _currentIndex = 0;
-
-  // App pages as widgets
-  static final List<Widget> _widget = [
-    const GramsPage(),
-    const GramsPage(),
-    const GramsPage(),
-    const GramsPage(),
+  List homeData = [
+    {"data": '32K', "label": 'grams posted'},
+    {"data": '101K', "label": 'books seeded'},
+    {"data": '25', "label": 'explore top books'},
+    {"data": '10', "label": 'grams posted by you'},
+    {"data": '14/20', "label": 'books in wishlist'},
+    {"data": '+', "label": 'gram'},
   ];
-
-  // Titles
-  static final List<String> _titles = [
-    'Bibliogram',
-    'Explore',
-    'Wishlist',
-    'Activities',
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      _currentIndex = 0;
-      _pageController = PageController(initialPage: _currentIndex);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: _titles[_currentIndex]),
-      body: PageView(
-        physics: const BouncingScrollPhysics(),
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        allowImplicitScrolling: true,
-        children: _widget,
-      ),
-      bottomNavigationBar: Theme(
-        data: ThemeData(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          textTheme: textTheme,
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (int index) {
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            );
-          },
-          elevation: 0,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
-          unselectedItemColor: Theme.of(context).colorScheme.tertiary,
-          iconSize: 30.0,
-          type: BottomNavigationBarType.fixed,
-          selectedFontSize: 0.0,
-          unselectedFontSize: 0.0,
-          items: CommonWidgets().bottomNavbarItems(),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Welcome'),
+                        Text(
+                          'Max Verstappen',
+                          style: TextStyle(fontSize: 30.0),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(CupertinoIcons.gear),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                itemCount: homeData.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .tertiary
+                            .withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              homeData[index]["data"],
+                              style: const TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
+                          ),
+                          Text(homeData[index]["label"])
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
         ),
       ),
     );
