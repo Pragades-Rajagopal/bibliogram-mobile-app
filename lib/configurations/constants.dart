@@ -3,6 +3,7 @@ Map<String, String> endpoints = {
   "register": "/api/register",
   "logout": "/api/logout",
   "deactivateUser": "/api/deactivate-user",
+  "appStats": "/api/app-stats",
 };
 
 Map<String, int> statusCode = {

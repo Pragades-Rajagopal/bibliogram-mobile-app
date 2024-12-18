@@ -39,7 +39,7 @@ class HttpRequest {
     if (token.isNotEmpty) apiHeader["Authorization"] = 'Bearer $token';
     if (userId.isNotEmpty) apiHeader["userId"] = userId;
     var response = await http.get(
-      Uri.parse('${_env?["url"]}$endpoint'),
+      Uri.parse('${_env?["URL"]}$endpoint'),
       headers: apiHeader,
     );
     return jsonDecode(response.body);
@@ -55,7 +55,7 @@ class HttpRequest {
     if (token.isNotEmpty) apiHeader["Authorization"] = 'Bearer $token';
     if (userId.isNotEmpty) apiHeader["userId"] = userId;
     var response = await http.put(
-      Uri.parse('${_env?["url"]}$endpoint'),
+      Uri.parse('${_env?["URL"]}$endpoint'),
       headers: apiHeader,
       body: json.encode(request),
     );
@@ -71,7 +71,7 @@ class HttpRequest {
     if (token.isNotEmpty) apiHeader["Authorization"] = 'Bearer $token';
     if (userId.isNotEmpty) apiHeader["userId"] = userId;
     var response = await http.delete(
-      Uri.parse('${_env?["url"]}$endpoint'),
+      Uri.parse('${_env?["URL"]}$endpoint'),
       headers: apiHeader,
     );
     return jsonDecode(response.body);

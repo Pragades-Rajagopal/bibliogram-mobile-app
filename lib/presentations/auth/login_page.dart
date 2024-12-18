@@ -5,6 +5,7 @@ import 'package:bibliogram/components/text_link_button.dart';
 import 'package:bibliogram/configurations/constants.dart';
 import 'package:bibliogram/presentations/app/base.dart';
 import 'package:bibliogram/services/auth.dart';
+import 'package:bibliogram/storage/local/data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,20 +37,25 @@ class _LoginPageState extends State<LoginPage> {
       setState(() => _buttonLoadingIndicator = !_buttonLoadingIndicator);
 
   Future<void> loginReq(String username, String privateKey) async {
-    final response =
-        await AuthApi().login({"username": username, "privateKey": privateKey});
-    _toggleButtonLoadingIndicator();
-    if (response.statusCode == statusCode["notFound"]) {
-      _showSnackBar('${alertDialog["notRegistered"]}');
-      return;
-    } else if (response.statusCode == statusCode["unauthorized"]) {
-      _showSnackBar('${alertDialog["invalidAuth"]}');
-      return;
-    } else if (response.statusCode == statusCode["serverError"]) {
+    try {
+      final response = await AuthApi()
+          .login({"username": username, "privateKey": privateKey});
+      _toggleButtonLoadingIndicator();
+      if (response.statusCode == statusCode["notFound"]) {
+        _showSnackBar('${alertDialog["notRegistered"]}');
+        return;
+      } else if (response.statusCode == statusCode["unauthorized"]) {
+        _showSnackBar('${alertDialog["invalidAuth"]}');
+        return;
+      } else if (response.statusCode == statusCode["serverError"]) {
+        _showSnackBar('${alertDialog["commonError"]}');
+        return;
+      }
+      await UserToken().storeTokenData(response.token!);
+      Get.offAll(() => const AppBasePage());
+    } catch (e) {
       _showSnackBar('${alertDialog["commonError"]}');
-      return;
     }
-    Get.offAll(() => const AppBasePage());
   }
 
   @override

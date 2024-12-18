@@ -1,3 +1,7 @@
+import 'package:bibliogram/components/base_page_grids.dart';
+import 'package:bibliogram/services/app_stats.dart';
+import 'package:bibliogram/storage/local/data.dart';
+import 'package:bibliogram/utils/helper_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,14 +13,24 @@ class AppBasePage extends StatefulWidget {
 }
 
 class _AppBasePageState extends State<AppBasePage> {
-  List homeData = [
-    {"data": '32K', "label": 'grams posted'},
-    {"data": '101K', "label": 'books seeded'},
-    {"data": '25', "label": 'explore top books'},
-    {"data": '10', "label": 'grams posted by you'},
-    {"data": '14/20', "label": 'books in wishlist'},
-    {"data": '+', "label": 'gram'},
-  ];
+  String? name;
+  List homeData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    initAsyncMethods();
+  }
+
+  void initAsyncMethods() async {
+    Map<String, dynamic> userData = await UserToken().getTokenData();
+    final stats = await AppStatsApi().get(userData["token"], userData["id"]);
+    final formattedStatData = formatStatInfo(stats.data!);
+    setState(() {
+      name = userData["name"];
+      homeData.addAll(formattedStatData);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +46,14 @@ class _AppBasePageState extends State<AppBasePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Welcome'),
+                        const Text('Welcome'),
                         Text(
-                          'Max Verstappen',
-                          style: TextStyle(fontSize: 30.0),
+                          '$name',
+                          style: const TextStyle(fontSize: 30.0),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -53,48 +67,7 @@ class _AppBasePageState extends State<AppBasePage> {
                 ],
               ),
             ),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                itemCount: homeData.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .tertiary
-                            .withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              homeData[index]["data"],
-                              style: const TextStyle(
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              maxLines: 1,
-                            ),
-                          ),
-                          Text(homeData[index]["label"])
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            )
+            Expanded(child: BasePageGridsBuilder(data: homeData))
           ],
         ),
       ),
