@@ -8,6 +8,9 @@ class BasePageGridsBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, Widget> pageRoutes = {
+      "GramsPage": const GramsPage(),
+    };
     return GridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       itemCount: data.length,
@@ -19,7 +22,8 @@ class BasePageGridsBuilder extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
           child: GestureDetector(
             onTap: () {
-              Get.to(() => const GramsPage());
+              final widget = pageRoutes[data[index]["page"]];
+              if (widget != null) Get.to(() => widget);
             },
             child: Container(
               padding: const EdgeInsets.all(16),

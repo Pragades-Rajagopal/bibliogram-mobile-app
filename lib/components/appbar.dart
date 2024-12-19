@@ -11,15 +11,24 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20.0,
-        ),
-      ),
-      centerTitle: true,
+    return SliverAppBar(
+      snap: false,
+      pinned: false,
+      floating: true,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontSize: 16.0,
+          ), //TextStyle
+        ), //Text
+      ), //FlexibleSpaceBar
+      expandedHeight: 60,
+      backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
+      //IconButton
+      actions: const <Widget>[], //<Widget>[]
     );
   }
 

@@ -22,6 +22,24 @@ class CommonWidgets {
     );
   }
 
+  Widget pageLoadingIndicator(BuildContext context) {
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      child: const Padding(
+        padding: EdgeInsets.all(18.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 18),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   List<BottomNavigationBarItem> bottomNavbarItems() {
     return <BottomNavigationBarItem>[
       const BottomNavigationBarItem(
