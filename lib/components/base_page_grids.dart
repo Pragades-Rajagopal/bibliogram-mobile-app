@@ -1,4 +1,5 @@
 import 'package:bibliogram/presentations/app/pages/grams.dart';
+import 'package:bibliogram/presentations/app/pages/top_books.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +11,7 @@ class BasePageGridsBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, Widget> pageRoutes = {
       "GramsPage": const GramsPage(),
+      "TopBooks": const TopBooks(),
     };
     return GridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -39,8 +41,11 @@ class BasePageGridsBuilder extends StatelessWidget {
                     child: data[index]["dataType"] == 'text'
                         ? Text(
                             data[index]["data"],
-                            style: const TextStyle(
-                              fontSize: 36,
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.fontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -56,7 +61,13 @@ class BasePageGridsBuilder extends StatelessWidget {
                             ],
                           ),
                   ),
-                  Text(data[index]["label"])
+                  Text(
+                    data[index]["label"],
+                    style: TextStyle(
+                      fontSize:
+                          Theme.of(context).textTheme.labelLarge?.fontSize,
+                    ),
+                  )
                 ],
               ),
             ),

@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final int index;
+  final List<Widget> actions;
+  final PreferredSizeWidget? bottomWidget;
+  final double? height;
+  final EdgeInsets? titlePadding;
   const MyAppBar({
     super.key,
     this.title = 'Bibliogram',
-    this.index = -1,
+    this.actions = const [],
+    this.bottomWidget,
+    this.height = 60,
+    this.titlePadding,
   });
 
   @override
@@ -24,11 +30,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             fontSize: 16.0,
           ), //TextStyle
         ), //Text
+        titlePadding: titlePadding,
       ), //FlexibleSpaceBar
-      expandedHeight: 60,
+      expandedHeight: height,
       backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
       //IconButton
-      actions: const <Widget>[], //<Widget>[]
+      actions: actions, //<Widget>[]
+      bottom: bottomWidget,
     );
   }
 

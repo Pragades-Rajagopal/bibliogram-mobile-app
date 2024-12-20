@@ -1,5 +1,6 @@
 import 'package:bibliogram/components/appbar.dart';
 import 'package:bibliogram/components/common_widgets.dart';
+import 'package:bibliogram/components/gram_card.dart';
 import 'package:bibliogram/components/sliver_container.dart';
 import 'package:bibliogram/components/sliver_list.dart';
 import 'package:bibliogram/services/grams.dart';
@@ -85,6 +86,9 @@ class _GramsPageState extends State<GramsPage> {
                       )
                     : AppSliverList(
                         data: globalGrams,
+                        itemBuilder: (context, item) {
+                          return GramCard(item: item);
+                        },
                       ),
                 _hasFeedData
                     ? SliverContainer(

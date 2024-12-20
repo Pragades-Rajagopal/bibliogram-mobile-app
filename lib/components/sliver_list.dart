@@ -1,10 +1,12 @@
-import 'package:bibliogram/components/gram_card.dart';
 import 'package:flutter/material.dart';
 
 class AppSliverList extends StatelessWidget {
+  final Widget Function(BuildContext context, Map<String, dynamic> item)
+      itemBuilder;
   final List data;
   const AppSliverList({
     super.key,
+    required this.itemBuilder,
     required this.data,
   });
 
@@ -16,7 +18,7 @@ class AppSliverList extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           childCount: data.length,
           (context, index) {
-            return GramCard(data: data[index]);
+            return itemBuilder(context, data[index]);
           }, //SliverChildBuildDelegate
         ),
       ),

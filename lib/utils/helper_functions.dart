@@ -18,13 +18,13 @@ List<Map<String, dynamic>> formatStatInfo(List input) {
       "data": formatNumber(booksSeeded),
       "label": 'books seeded',
       "dataType": "text",
-      "page": "BooksPage"
+      "page": ""
     },
     {
       "label": 'explore top books',
       "dataType": "icon",
       "icon": CupertinoIcons.book_fill,
-      "page": "BooksPage"
+      "page": "TopBooks"
     },
     {
       "data": formatNumber(yourGrams),
