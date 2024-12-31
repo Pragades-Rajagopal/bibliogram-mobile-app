@@ -35,7 +35,7 @@ class BookCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize:
                           Theme.of(context).textTheme.bodyMedium?.fontSize,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.normal,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),

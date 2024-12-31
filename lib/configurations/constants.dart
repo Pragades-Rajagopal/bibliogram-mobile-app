@@ -5,7 +5,10 @@ Map<String, String> endpoints = {
   "deactivateUser": "/api/deactivate-user",
   "appStats": "/api/app-stats",
   "grams": "/api/grams",
+  "gram": "/api/gram",
   "topBooks": "/api/top-books",
+  "book": "/api/book",
+  "comment": "/api/comment"
 };
 
 Map<String, int> statusCode = {

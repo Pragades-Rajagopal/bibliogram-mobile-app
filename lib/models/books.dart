@@ -17,3 +17,18 @@ class BooksResponse extends BaseResponse {
         count = json["count"],
         super.fromJSON();
 }
+
+/// Model for fetching book by id
+class BookByIdResponse extends BaseResponse {
+  List<dynamic>? data;
+
+  BookByIdResponse({
+    super.statusCode,
+    super.message,
+    this.data,
+  });
+
+  BookByIdResponse.fromJSON(super.json)
+      : data = json["data"],
+        super.fromJSON();
+}

@@ -16,3 +16,17 @@ class GetGramsResponse extends BaseResponse {
         count = json["count"],
         super.fromJSON();
 }
+
+class GetGramResponse extends BaseResponse {
+  List<dynamic>? data;
+
+  GetGramResponse({
+    super.statusCode,
+    super.message,
+    this.data,
+  });
+
+  GetGramResponse.fromJSON(super.json)
+      : data = json["data"],
+        super.fromJSON();
+}

@@ -3,9 +3,11 @@ import 'package:bibliogram/components/common_widgets.dart';
 import 'package:bibliogram/components/gram_card.dart';
 import 'package:bibliogram/components/sliver_container.dart';
 import 'package:bibliogram/components/sliver_list.dart';
+import 'package:bibliogram/presentations/app/pages/gram_info.dart';
 import 'package:bibliogram/services/grams.dart';
 import 'package:bibliogram/storage/local/data.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class GramsPage extends StatefulWidget {
   const GramsPage({super.key});
@@ -87,7 +89,12 @@ class _GramsPageState extends State<GramsPage> {
                     : AppSliverList(
                         data: globalGrams,
                         itemBuilder: (context, item) {
-                          return GramCard(item: item);
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(() => GramInfoPage(gramId: item["id"]));
+                            },
+                            child: GramCard(item: item),
+                          );
                         },
                       ),
                 _hasFeedData

@@ -22,4 +22,18 @@ class BooksApi {
       throw Exception(e);
     }
   }
+
+  Future<BookByIdResponse> getBookById(String id) async {
+    try {
+      final httpRes = await httpRequest.get(
+        '${endpoints["book"]}/$id',
+        token: token,
+        userId: userId,
+      );
+      BookByIdResponse response = BookByIdResponse.fromJSON(httpRes);
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

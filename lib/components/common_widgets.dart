@@ -64,4 +64,21 @@ class CommonWidgets {
       ),
     ];
   }
+
+  TextSpan appTextSpan(
+      {String? text,
+      List<TextSpan> children = const [],
+      double fontSize = 20,
+      FontWeight fontWeight = FontWeight.normal,
+      Color? color}) {
+    return TextSpan(
+      text: text,
+      children: children,
+      style: TextStyle(
+        fontWeight: fontWeight,
+        fontSize: fontSize,
+        color: color,
+      ),
+    );
+  }
 }

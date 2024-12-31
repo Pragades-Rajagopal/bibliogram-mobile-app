@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class GramCard extends StatelessWidget {
   final Map<String, dynamic> item;
-  const GramCard({super.key, required this.item});
+  final bool showBookMetadata;
+  const GramCard({super.key, required this.item, this.showBookMetadata = true});
 
   @override
   Widget build(BuildContext context) {
@@ -21,34 +22,39 @@ class GramCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                    child: Text(
-                      item["book"],
-                      style: TextStyle(
-                        fontSize:
-                            Theme.of(context).textTheme.labelMedium?.fontSize,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.secondary,
+            showBookMetadata
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          child: Text(
+                            item["book"],
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.fontSize,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                Text(
-                  item["author"],
-                  style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.labelMedium?.fontSize,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-              ],
-            ),
+                      Text(
+                        item["author"],
+                        style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.labelMedium?.fontSize,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
             const SizedBox(
               height: 4.0,
             ),

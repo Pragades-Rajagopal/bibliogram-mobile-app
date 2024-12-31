@@ -1,12 +1,14 @@
 import 'package:bibliogram/components/appbar.dart';
 import 'package:bibliogram/components/book_card.dart';
 import 'package:bibliogram/components/common_widgets.dart';
+import 'package:bibliogram/components/search_bar.dart';
 import 'package:bibliogram/components/sliver_container.dart';
 import 'package:bibliogram/components/sliver_list.dart';
+import 'package:bibliogram/presentations/app/pages/book_info.dart';
 import 'package:bibliogram/services/books.dart';
 import 'package:bibliogram/storage/local/data.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TopBooks extends StatefulWidget {
   const TopBooks({super.key});
@@ -51,39 +53,19 @@ class _TopBooksState extends State<TopBooks> {
           ? CommonWidgets().pageLoadingIndicator(context)
           : CustomScrollView(
               slivers: [
-                MyAppBar(
+                const MyAppBar(
                   title: 'Top Books',
-                  height: 130,
-                  titlePadding: const EdgeInsets.only(bottom: 88),
+                  height: 110,
+                  titlePadding: EdgeInsets.only(bottom: 72),
                   bottomWidget: PreferredSize(
-                    preferredSize: const Size.fromHeight(10.0),
+                    preferredSize: Size.fromHeight(10.0),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                      child: SearchBar(
-                        shadowColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        backgroundColor: WidgetStatePropertyAll(
-                          Theme.of(context)
-                              .colorScheme
-                              .tertiary
-                              .withOpacity(0.5),
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                      child: SizedBox(
+                        height: 48,
+                        child: AppSearchBar(
+                          hintText: 'Search books, authors',
                         ),
-                        leading: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(CupertinoIcons.search),
-                        ),
-                        hintText: 'Search books, authors',
-                        hintStyle: WidgetStatePropertyAll(
-                          TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                        trailing: const [
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(CupertinoIcons.clear),
-                          )
-                        ],
                       ),
                     ),
                   ),
@@ -96,7 +78,12 @@ class _TopBooksState extends State<TopBooks> {
                     : AppSliverList(
                         data: topBooksData,
                         itemBuilder: (context, item) {
-                          return BookCard(item: item);
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(() => BookInfoPage(bookId: item["id"]));
+                            },
+                            child: BookCard(item: item),
+                          );
                         },
                       ),
                 const SliverToBoxAdapter(
