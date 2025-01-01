@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 class GramCard extends StatelessWidget {
   final Map<String, dynamic> item;
   final bool showBookMetadata;
-  const GramCard({super.key, required this.item, this.showBookMetadata = true});
+  final int displayMaxLines;
+  final bool showPrivateBadge;
+  const GramCard({
+    super.key,
+    required this.item,
+    this.showBookMetadata = true,
+    this.displayMaxLines = 5,
+    this.showPrivateBadge = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +71,7 @@ class GramCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
               ),
-              maxLines: 5,
+              maxLines: displayMaxLines,
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 6.0),
@@ -80,19 +88,30 @@ class GramCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                    child: Text(
-                      item["user"],
-                      style: TextStyle(
-                        fontSize:
-                            Theme.of(context).textTheme.labelSmall?.fontSize,
-                        color: Theme.of(context).colorScheme.secondary,
+                !showPrivateBadge
+                    ? Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          child: Text(
+                            item["user"],
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.fontSize,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Text(
+                        item["isPrivate"] ? 'Private' : 'Public',
+                        style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.labelSmall?.fontSize,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                       ),
-                    ),
-                  ),
-                ),
                 Text(
                   item["shortDate"],
                   style: TextStyle(

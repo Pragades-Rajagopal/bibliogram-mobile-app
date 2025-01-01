@@ -119,7 +119,7 @@ class _GramInfoState extends State<GramInfoPage> {
                         ),
                         sizedBox,
                         Text(
-                          gramInfo["gram"]!,
+                          gramInfo["gram"],
                           style: const TextStyle(
                             fontSize: 22.0,
                           ),

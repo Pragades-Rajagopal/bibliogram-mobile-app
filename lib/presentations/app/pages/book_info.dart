@@ -25,7 +25,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
   List gramsList = [];
   int totalGrams = 0;
   // Pagination variables
-  final int _limit = 10;
+  final int _limit = 20;
   int _offset = 0;
   bool _hasFeedData = true;
   bool _showPageLoader = true;

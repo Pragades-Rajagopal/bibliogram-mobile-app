@@ -19,14 +19,12 @@ class GetGramsResponse extends BaseResponse {
 
 class GetGramResponse extends BaseResponse {
   List<dynamic>? data;
+  int? count;
 
-  GetGramResponse({
-    super.statusCode,
-    super.message,
-    this.data,
-  });
+  GetGramResponse({super.statusCode, super.message, this.data, this.count});
 
   GetGramResponse.fromJSON(super.json)
       : data = json["data"],
+        count = json["count"],
         super.fromJSON();
 }

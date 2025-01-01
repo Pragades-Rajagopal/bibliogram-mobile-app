@@ -24,13 +24,13 @@ List<Map<String, dynamic>> formatStatInfo(List input) {
       "label": 'explore top books',
       "dataType": "icon",
       "icon": CupertinoIcons.book_fill,
-      "page": "TopBooks"
+      "page": "TopBooksPage"
     },
     {
       "data": formatNumber(yourGrams),
       "label": 'grams posted by you',
       "dataType": "text",
-      "page": "ActivitiesPage"
+      "page": "MyActivitiesPage"
     },
     {
       "data":

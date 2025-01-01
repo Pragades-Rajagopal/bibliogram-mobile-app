@@ -10,14 +10,14 @@ import 'package:bibliogram/storage/local/data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TopBooks extends StatefulWidget {
-  const TopBooks({super.key});
+class TopBooksPage extends StatefulWidget {
+  const TopBooksPage({super.key});
 
   @override
-  State<TopBooks> createState() => _TopBooksState();
+  State<TopBooksPage> createState() => _TopBooksState();
 }
 
-class _TopBooksState extends State<TopBooks> {
+class _TopBooksState extends State<TopBooksPage> {
   List topBooksData = [];
   // State variables
   bool _showPageLoader = true;

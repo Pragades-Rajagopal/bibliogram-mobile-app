@@ -1,4 +1,5 @@
 import 'package:bibliogram/presentations/app/pages/grams.dart';
+import 'package:bibliogram/presentations/app/pages/my_activities.dart';
 import 'package:bibliogram/presentations/app/pages/top_books.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,8 @@ class BasePageGridsBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, Widget> pageRoutes = {
       "GramsPage": const GramsPage(),
-      "TopBooks": const TopBooks(),
+      "TopBooksPage": const TopBooksPage(),
+      "MyActivitiesPage": const MyActivitiesPage(),
     };
     return GridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
