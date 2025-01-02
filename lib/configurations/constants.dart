@@ -8,7 +8,9 @@ Map<String, String> endpoints = {
   "gram": "/api/gram",
   "topBooks": "/api/top-books",
   "book": "/api/book",
-  "comment": "/api/comment"
+  "comment": "/api/comment",
+  "bookmark": "/api/bookmark",
+  "search": "/api/search",
 };
 
 Map<String, int> statusCode = {

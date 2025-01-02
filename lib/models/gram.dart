@@ -28,3 +28,20 @@ class GetGramResponse extends BaseResponse {
         count = json["count"],
         super.fromJSON();
 }
+
+class GetGramBookmarksResponse extends BaseResponse {
+  List<dynamic>? data;
+  int? count;
+
+  GetGramBookmarksResponse({
+    super.statusCode,
+    super.message,
+    this.data,
+    this.count,
+  });
+
+  GetGramBookmarksResponse.fromJSON(super.json)
+      : data = json["data"],
+        count = json["count"],
+        super.fromJSON();
+}

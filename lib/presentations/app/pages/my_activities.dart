@@ -1,4 +1,6 @@
 import 'package:bibliogram/components/tab_bar.dart';
+import 'package:bibliogram/presentations/app/pages/tabs/my_bookmarks.dart';
+import 'package:bibliogram/presentations/app/pages/tabs/my_comments.dart';
 import 'package:bibliogram/presentations/app/pages/tabs/my_grams.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +24,8 @@ class _MyGramsPageState extends State<MyActivitiesPage> {
         ],
         tabPages: [
           MyGramsPage(),
-          Center(child: Text('Bookmarks')),
-          Center(child: Text('Comments')),
+          MyBookmarksPage(),
+          MyCommentsPage(),
         ],
       ),
     );

@@ -21,7 +21,7 @@ List<Map<String, dynamic>> formatStatInfo(List input) {
       "page": ""
     },
     {
-      "label": 'explore top books',
+      "label": 'explore top books & grams',
       "dataType": "icon",
       "icon": CupertinoIcons.book_fill,
       "page": "TopBooksPage"

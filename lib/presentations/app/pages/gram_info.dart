@@ -60,9 +60,9 @@ class _GramInfoState extends State<GramInfoPage> {
       Map<String, dynamic> userData = await UserToken().getTokenData();
       final response = await GramsApi(userData["token"], userData["id"])
           .getGramById(widget.gramId);
-      final commentsResponse =
-          await CommentsApi(userData["token"], userData["id"])
-              .getComments(widget.gramId, limit: _limit, offset: _offset);
+      final commentsResponse = await CommentsApi(
+              userData["token"], userData["id"])
+          .getComments(widget.gramId, 'gramId', limit: _limit, offset: _offset);
       int localOffset = _offset + _limit;
       setState(() {
         gramInfo = response.data![0];

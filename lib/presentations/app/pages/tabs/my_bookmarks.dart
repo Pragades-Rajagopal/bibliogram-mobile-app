@@ -8,20 +8,19 @@ import 'package:bibliogram/storage/local/data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MyGramsPage extends StatefulWidget {
-  const MyGramsPage({
+class MyBookmarksPage extends StatefulWidget {
+  const MyBookmarksPage({
     super.key,
   });
 
   @override
-  State<MyGramsPage> createState() => _GramsPageState();
+  State<MyBookmarksPage> createState() => _GramsPageState();
 }
 
-class _GramsPageState extends State<MyGramsPage> {
+class _GramsPageState extends State<MyBookmarksPage> {
   final ScrollController scrollController = ScrollController();
-  List gramsList = [];
+  List gramBookmarks = [];
   // Pagination variables
-  final int _limit = 999999999;
   bool _showPageLoader = true;
 
   @override
@@ -34,9 +33,9 @@ class _GramsPageState extends State<MyGramsPage> {
     try {
       Map<String, dynamic> userData = await UserToken().getTokenData();
       final response = await GramsApi(userData["token"], userData["id"])
-          .getGramsByQuery(userData["id"], "userId", limit: _limit, offset: 0);
+          .getGramBookmarksByQuery(userData["id"]);
       setState(() {
-        gramsList.addAll(response.data!);
+        gramBookmarks.addAll(response.data!);
         _showPageLoader = false;
       });
     } catch (e) {
@@ -55,23 +54,22 @@ class _GramsPageState extends State<MyGramsPage> {
         : CustomScrollView(
             // controller: scrollController,
             slivers: <Widget>[
-              gramsList.isEmpty
+              gramBookmarks.isEmpty
                   ? SliverContainer(
-                      text: 'No grams posted yet!',
+                      text: 'No grams bookmarked yet!',
                       color: Theme.of(context).colorScheme.tertiary,
                       padding: const EdgeInsets.only(top: 20),
                     )
                   : AppSliverList(
-                      data: gramsList,
+                      data: gramBookmarks,
                       itemBuilder: (context, item) {
                         return GestureDetector(
                           onTap: () {
-                            Get.to(() => GramInfoPage(gramId: item["id"]));
+                            Get.to(() => GramInfoPage(gramId: item["gramId"]));
                           },
                           child: GramCard(
                             item: item,
-                            displayMaxLines: 3,
-                            showPrivateBadge: true,
+                            displayMaxLines: 5,
                           ),
                         );
                       },

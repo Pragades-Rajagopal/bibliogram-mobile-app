@@ -51,4 +51,20 @@ class GramsApi {
       throw Exception(e);
     }
   }
+
+  Future<GetGramBookmarksResponse> getGramBookmarksByQuery(
+      String userId) async {
+    try {
+      final httpRes = await httpRequest.get(
+        '${endpoints["bookmark"]}/$userId',
+        token: token,
+        userId: userId,
+      );
+      GetGramBookmarksResponse response =
+          GetGramBookmarksResponse.fromJSON(httpRes);
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

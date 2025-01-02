@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class CommentCard extends StatelessWidget {
   final Map<String, dynamic> item;
-  const CommentCard({super.key, required this.item});
+  final bool showUser;
+  const CommentCard({super.key, required this.item, this.showUser = true});
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +34,20 @@ class CommentCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                    child: Text(
-                      item["user"],
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                  ),
-                ),
+                showUser
+                    ? Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          child: Text(
+                            item["user"],
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
                 Text(
                   item["shortDate"],
                   style: TextStyle(
