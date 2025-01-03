@@ -9,12 +9,22 @@ class AppSearchBar extends StatefulWidget {
   final List<Map<String, dynamic>> searchResult;
   final String hintText;
   final SearchController searchController;
+  final bool fullScreen;
+  final WidgetStateProperty<OutlinedBorder?>? barShape;
+  final WidgetStateProperty<Color?>? barBackgroundColor;
+  final Function(Map<String, dynamic>)? selectedItem;
+  final bool isPageRouteFlow;
   const AppSearchBar({
     super.key,
     required this.onChanged,
     required this.searchResult,
     required this.hintText,
     required this.searchController,
+    this.fullScreen = true,
+    this.barShape,
+    this.barBackgroundColor,
+    this.selectedItem,
+    this.isPageRouteFlow = true,
   });
 
   @override
@@ -26,7 +36,7 @@ class _AppSearchBarState extends State<AppSearchBar> {
   Widget build(BuildContext context) {
     return SearchAnchor.bar(
       searchController: widget.searchController,
-      isFullScreen: true,
+      isFullScreen: widget.fullScreen,
       onChanged: widget.onChanged,
       suggestionsBuilder: (context, controller) {
         return widget.searchResult.map((item) {
@@ -35,15 +45,20 @@ class _AppSearchBarState extends State<AppSearchBar> {
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  controller.closeView('');
+                  widget.isPageRouteFlow
+                      ? controller.closeView('')
+                      : controller.closeView(item["field1"]);
                   FocusScope.of(context).unfocus();
                 });
-                if (item.keys.isNotEmpty) {
+
+                if (widget.isPageRouteFlow && item.keys.isNotEmpty) {
                   if (item["type"] == "book") {
                     Get.to(() => BookInfoPage(bookId: item["id"]));
                   } else if (item["type"] == "gram") {
                     Get.to(() => GramInfoPage(gramId: item["id"]));
                   }
+                } else if (!widget.isPageRouteFlow) {
+                  widget.selectedItem!(item);
                 }
               },
               child: SearchCard(item: item),
@@ -53,9 +68,10 @@ class _AppSearchBarState extends State<AppSearchBar> {
       },
       barLeading: Container(),
       viewBackgroundColor: Theme.of(context).colorScheme.surface,
-      barBackgroundColor: WidgetStatePropertyAll(
-        Theme.of(context).colorScheme.tertiary.withOpacity(0.5),
-      ),
+      barBackgroundColor: widget.barBackgroundColor ??
+          WidgetStatePropertyAll(
+            Theme.of(context).colorScheme.tertiary.withOpacity(0.5),
+          ),
       barHintText: widget.hintText,
       barHintStyle: WidgetStatePropertyAll(
         TextStyle(
@@ -67,6 +83,11 @@ class _AppSearchBarState extends State<AppSearchBar> {
         color: Theme.of(context).colorScheme.secondary,
       ),
       dividerColor: Theme.of(context).colorScheme.tertiary.withOpacity(0.5),
+      barShape: widget.barShape,
+      barOverlayColor: const WidgetStatePropertyAll(Colors.transparent),
+      viewShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0), // Optional border
+      ),
     );
   }
 }

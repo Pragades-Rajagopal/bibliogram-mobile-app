@@ -11,14 +11,14 @@ import 'package:bibliogram/storage/local/data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TopBooksPage extends StatefulWidget {
-  const TopBooksPage({super.key});
+class ExplorePage extends StatefulWidget {
+  const ExplorePage({super.key});
 
   @override
-  State<TopBooksPage> createState() => _TopBooksState();
+  State<ExplorePage> createState() => _TopBooksState();
 }
 
-class _TopBooksState extends State<TopBooksPage> {
+class _TopBooksState extends State<ExplorePage> {
   final SearchController searchController = SearchController();
   List topBooksData = [];
   List<Map<String, dynamic>> searchResults = [];
@@ -63,7 +63,6 @@ class _TopBooksState extends State<TopBooksPage> {
             .toList());
       });
     } catch (e) {
-      print(e);
       if (mounted) {
         CommonWidgets().showSnackBar(
             context, 'Something went wrong during exploration',
@@ -71,12 +70,6 @@ class _TopBooksState extends State<TopBooksPage> {
       }
       setState(() => _showPageLoader = false);
     }
-  }
-
-  void searchSelected(Map<String, String> selectedItem) {
-    setState(() {
-      searchSelection = selectedItem;
-    });
   }
 
   @override
@@ -97,7 +90,7 @@ class _TopBooksState extends State<TopBooksPage> {
                       child: SizedBox(
                         height: 48,
                         child: AppSearchBar(
-                          hintText: 'Explore books, authors, grams',
+                          hintText: ' Explore books, authors, grams',
                           onChanged: (String value) {
                             searchResult(value);
                           },

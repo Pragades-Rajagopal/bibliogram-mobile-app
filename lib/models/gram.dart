@@ -45,3 +45,12 @@ class GetGramBookmarksResponse extends BaseResponse {
         count = json["count"],
         super.fromJSON();
 }
+
+class PostGramResponse extends BaseResponse {
+  PostGramResponse({
+    super.statusCode,
+    super.message,
+  });
+
+  PostGramResponse.fromJSON(super.json) : super.fromJSON();
+}

@@ -67,4 +67,19 @@ class GramsApi {
       throw Exception(e);
     }
   }
+
+  Future<PostGramResponse> postGram(Map<String, dynamic> body) async {
+    try {
+      final httpRes = await httpRequest.put(
+        '${endpoints["gram"]}',
+        body,
+        token: token,
+        userId: userId,
+      );
+      PostGramResponse response = PostGramResponse.fromJSON(httpRes);
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

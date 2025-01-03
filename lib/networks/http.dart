@@ -15,7 +15,7 @@ class HttpRequest {
 
   Future<dynamic> post(
     String endpoint,
-    Map<String, String> request, {
+    Map<String, dynamic> request, {
     String token = '',
     String userId = '',
   }) async {
@@ -47,7 +47,7 @@ class HttpRequest {
 
   Future<dynamic> put(
     String endpoint,
-    Map<String, String> request, {
+    Map<String, dynamic> request, {
     String token = '',
     String userId = '',
   }) async {

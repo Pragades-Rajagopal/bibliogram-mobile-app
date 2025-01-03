@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class TextLinkButton extends StatelessWidget {
   final String text;
+  final double fontSize;
   final void Function() onPressed;
-  const TextLinkButton(
-      {super.key, required this.text, required this.onPressed});
+  const TextLinkButton({
+    super.key,
+    required this.text,
+    this.fontSize = 18.0,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +20,9 @@ class TextLinkButton extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(
+        style: TextStyle(
           color: Colors.blue,
+          fontSize: fontSize,
         ),
       ),
     );

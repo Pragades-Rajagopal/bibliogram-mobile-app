@@ -112,6 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                             usernameController.text, privateKeyController.text);
                       }
                     },
+                    iconColor: Theme.of(context).colorScheme.surface,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   const SizedBox(height: 24.0),
                   Row(

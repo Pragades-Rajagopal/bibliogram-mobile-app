@@ -1,5 +1,6 @@
 import 'package:bibliogram/components/appbar.dart';
 import 'package:bibliogram/components/common_widgets.dart';
+import 'package:bibliogram/components/expandable_text.dart';
 import 'package:bibliogram/components/gram_card.dart';
 import 'package:bibliogram/components/sliver_container.dart';
 import 'package:bibliogram/components/sliver_list.dart';
@@ -21,7 +22,7 @@ class BookInfoPage extends StatefulWidget {
 class _BookInfoPageState extends State<BookInfoPage> {
   final ScrollController scrollController = ScrollController();
   CommonWidgets commonWidgets = CommonWidgets();
-  Map<String, dynamic> bookinfo = {};
+  Map<String, dynamic> bookInfo = {};
   List gramsList = [];
   int totalGrams = 0;
   // Pagination variables
@@ -64,7 +65,7 @@ class _BookInfoPageState extends State<BookInfoPage> {
               limit: _limit, offset: _offset);
       int localOffset = _offset + _limit;
       setState(() {
-        bookinfo = response.data![0];
+        bookInfo = response.data![0];
         gramsList.addAll(gramsResponse.data!);
         totalGrams = gramsResponse.count!;
         _offset = localOffset;
@@ -96,74 +97,74 @@ class _BookInfoPageState extends State<BookInfoPage> {
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Text.rich(
-                        //   commonWidgets.appTextSpan(
-                        //     color: Theme.of(context).colorScheme.secondary,
-                        //     fontSize: 20,
-                        //     children: [
-                        //       commonWidgets.appTextSpan(text: 'Gram about '),
-                        //       commonWidgets.appTextSpan(
-                        //         text: bookinfo["book"],
-                        //         fontWeight: FontWeight.bold,
-                        //       ),
-                        //       commonWidgets.appTextSpan(text: ' by '),
-                        //       commonWidgets.appTextSpan(
-                        //         text: bookinfo["author"],
-                        //         fontWeight: FontWeight.bold,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // sizedBox,
                         Text(
-                          bookinfo["name"]!,
-                          style: const TextStyle(
-                            fontSize: 22.0,
+                          bookInfo["name"]!,
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
-                        ),
-                        Text(
-                          bookinfo["author"]!,
-                          style: const TextStyle(
-                            fontSize: 22.0,
-                          ),
+                          textAlign: TextAlign.center,
                         ),
                         sizedBox,
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Expanded(
-                        //       child: Padding(
-                        //         padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                        //         child: Text(
-                        //           'From ${bookinfo["user"]}',
-                        //           style: TextStyle(
-                        //             fontSize: 18.0,
-                        //             color:
-                        //                 Theme.of(context).colorScheme.secondary,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     Text(
-                        //       bookinfo["shortDate"],
-                        //       style: TextStyle(
-                        //         fontSize: 16.0,
-                        //         color: Theme.of(context).colorScheme.secondary,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
+                        Text(
+                          bookInfo["author"]!,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        sizedBox,
+                        if (bookInfo["summary"] != null) ...{
+                          ExpandableText(
+                            text: bookInfo["summary"]!,
+                          ),
+                        },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (bookInfo["rating"] != null) ...{
+                              Text(
+                                'Ratings - ${bookInfo["rating"]!}',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                            },
+                            if (bookInfo["pages"] != null) ...{
+                              Text(
+                                bookInfo["pages"] > 1
+                                    ? '${bookInfo["pages"]!} pages'
+                                    : '${bookInfo["pages"]!} page',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                            },
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        if (gramsList.isNotEmpty) ...{
+                          Text(
+                            totalGrams <= 1
+                                ? '$totalGrams gram about this book'
+                                : '$totalGrams grams about this book',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        },
                       ],
                     ),
                   ),
-                ),
-                SliverContainer(
-                  text: totalGrams <= 1
-                      ? '$totalGrams gram'
-                      : '$totalGrams grams',
-                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 AppSliverList(
                   data: gramsList,

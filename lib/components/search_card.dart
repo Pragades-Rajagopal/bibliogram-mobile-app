@@ -12,9 +12,10 @@ class SearchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.surface,
-      shape: UnderlineInputBorder(
+      shape: const UnderlineInputBorder(
         borderSide: BorderSide(
-          color: Theme.of(context).colorScheme.tertiary,
+          // color: Theme.of(context).colorScheme.tertiary,
+          color: Colors.transparent,
         ),
       ),
       shadowColor: Colors.transparent,

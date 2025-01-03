@@ -43,7 +43,7 @@ List<Map<String, dynamic>> formatStatInfo(List input) {
       "label": 'gram',
       "dataType": "icon",
       "icon": CupertinoIcons.pencil_circle_fill,
-      "page": "AddGramPage"
+      "page": "PostGramPage"
     },
   ];
 }

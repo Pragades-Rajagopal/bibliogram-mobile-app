@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 class MiniButton extends StatefulWidget {
   final void Function() onPressed;
   final bool loadingIndicatorToggle;
+  final IconData icon;
+  final double iconSize;
+  final Color iconColor;
+  final Color backgroundColor;
   const MiniButton({
     super.key,
     required this.onPressed,
     required this.loadingIndicatorToggle,
+    required this.backgroundColor,
+    required this.iconColor,
+    this.icon = Icons.arrow_forward_outlined,
+    this.iconSize = 32.0,
   });
 
   @override
@@ -19,7 +27,9 @@ class _MiniButtonState extends State<MiniButton> {
     return TextButton(
       onPressed: widget.onPressed,
       style: TextButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: widget.backgroundColor,
+        overlayColor: Colors.transparent,
+        splashFactory: NoSplash.splashFactory,
         minimumSize: const Size(60, 60),
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -44,9 +54,9 @@ class _MiniButtonState extends State<MiniButton> {
               ),
             )
           : Icon(
-              Icons.arrow_forward_outlined,
-              size: 32.0,
-              color: Theme.of(context).colorScheme.surface,
+              widget.icon,
+              size: widget.iconSize,
+              color: widget.iconColor,
             ),
     );
   }

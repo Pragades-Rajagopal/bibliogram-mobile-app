@@ -105,6 +105,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             nameController.text, usernameController.text);
                       }
                     },
+                    iconColor: Theme.of(context).colorScheme.surface,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   const SizedBox(height: 24.0),
                   Row(
